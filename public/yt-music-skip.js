@@ -1,7 +1,7 @@
 let prevSong = "";
 
 const addPlayList = (name) => {
-  let lists = JSON.parse(localStorage.getItem("playList"));
+  let lists = JSON.parse(localStorage.getItem("playList") || null) || [];
   const item = { name, expired: new Date(new Date().getTime() + 120 * 60000) };
 
   if (lists && Array.isArray(lists)) {
@@ -16,7 +16,7 @@ const addPlayList = (name) => {
 };
 
 const removeExpired = () => {
-  const lists = JSON.parse(localStorage.getItem("playList"));
+  const lists = JSON.parse(localStorage.getItem("playList") || null) || [];
 
   if (lists && Array.isArray(lists)) {
     lists.map((item, idx) => {
@@ -31,7 +31,18 @@ const removeExpired = () => {
 
 const playListRemove = async (song) => {
   removeExpired();
-  const removedItems = JSON.parse(localStorage.getItem("playList")) || [];
+  const removedItems = JSON.parse(localStorage.getItem("playList") || null) || [];
+  let playingIdx = 0;
+
+  const checkListEl = document.querySelector("div#contents.style-scope.ytmusic-player-queue");
+  const checkList = checkListEl ? checkListEl.childNodes : null;
+
+  for (let i = 0; i < checkList.length; i++) {
+    if (song === checkList[i].children[2].children[0].innerText) {
+      playingIdx = i;
+      break;
+    }
+  }
 
   for (let i = 0; i < removedItems.length; i++) {
     const playListEl = document.querySelector("div#contents.style-scope.ytmusic-player-queue");
@@ -39,10 +50,11 @@ const playListRemove = async (song) => {
     let selectedIdx;
     let selectedEl;
     let selectedName = "";
+
     for (let j = 0; j < list.length; j++) {
       selectedEl = list[j].children;
 
-      if (selectedEl[2].children[0].innerText === removedItems[i].name && song !== removedItems[i].name) {
+      if (selectedEl[2].children[0].innerText === removedItems[i].name && song !== removedItems[i].name && playingIdx < j) {
         selectedName = removedItems[i].name;
         selectedIdx = j;
         break;
