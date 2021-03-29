@@ -89,7 +89,7 @@ const playListRemove = async (song) => {
   }
 };
 
-setInterval(() => {
+const intervalFunc = () => {
   const playListEl = document.querySelector("div#contents.style-scope.ytmusic-player-queue");
   const nowPlay = document.getElementsByClassName("title ytmusic-player-bar");
   const playList = playListEl ? [...playListEl.childNodes] : [];
@@ -104,4 +104,53 @@ setInterval(() => {
       prevSong = song;
     }
   }
-}, 10000);
+};
+
+let interval = null;
+
+const onLoad = () => {
+  const labelEl = document.createElement("label");
+  labelEl.classList.add("yt_skip_btn");
+
+  const containerEl = document.createElement("div");
+  containerEl.classList.add("yt_skip_btn_toggle");
+
+  const inputEl = document.createElement("input");
+  inputEl.classList.add("yt_skip_btn_toggle_input");
+  inputEl.type = "checkbox";
+  inputEl.checked = localStorage.getItem("autoSkip") && localStorage.getItem("autoSkip") === "true";
+
+  if (inputEl.checked) {
+    interval = setInterval(intervalFunc, 10000);
+  }
+
+  const spanEl = document.createElement("div");
+  spanEl.classList.add("yt_skip_btn_toggle_entity");
+
+  const textEl = document.createElement("div");
+  textEl.classList.add("yt_skip_btn_text");
+  textEl.innerText = "Auto Skip";
+
+  containerEl.append(inputEl);
+  containerEl.append(spanEl);
+  labelEl.append(containerEl);
+  labelEl.append(textEl);
+
+  labelEl.addEventListener("click", () => {
+    const checked = document.querySelector("input.yt_skip_btn_toggle_input").checked;
+    localStorage.setItem("autoSkip", checked);
+
+    if (checked && interval === null) {
+      interval = setInterval(intervalFunc, 10000);
+    } else {
+      clearInterval(interval);
+      interval = null;
+    }
+  });
+
+  const parentEl = document.querySelector("div.center-content.style-scope.ytmusic-nav-bar");
+  parentEl.append(labelEl);
+  parentEl.style.alignItems = "center";
+};
+
+onLoad();

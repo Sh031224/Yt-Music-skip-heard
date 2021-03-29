@@ -1,0 +1,64 @@
+.yt_skip_btn {
+  margin-left: 45px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  height: 25px;
+}
+
+.yt_skip_btn_text {
+  margin-left: 10px;
+  font-size: 1.6rem;
+  color: var(--ytmusic-text-primary);
+}
+.yt_skip_btn_toggle {
+  isolation: isolate;
+  position: relative;
+  height: 25px;
+  width: 50px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  background: rgb(212, 212, 212);
+}
+.yt_skip_btn_toggle_entity {
+  height: 25px;
+  width: 200%;
+  background: #ffffff;
+  border-radius: 15px;
+  transform: translate3d(-75%, 0, 0);
+  transition: all 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+}
+.yt_skip_btn_toggle input {
+  display: none;
+}
+input:checked ~ .yt_skip_btn_toggle_entity {
+  background: #036bda;
+  transform: translate3d(25%, 0, 0);
+}
+
+@media (max-width: 768px) {
+  .yt_skip_btn {
+    height: 20px;
+    margin: 0;
+  }
+
+  .yt_skip_btn_text {
+    display: none;
+  }
+  .yt_skip_btn_toggle {
+    height: 20px;
+    width: 40px;
+    border-radius: 10px;
+  }
+  .yt_skip_btn_toggle_entity {
+    height: 20px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .yt_skip_btn {
+    margin-left: 5px;
+  }
+}
