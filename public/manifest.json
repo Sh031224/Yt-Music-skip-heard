@@ -1,9 +1,9 @@
 {
   "name": "Yt-Music skip heard",
-  "description": "It automatically adjusts the playlist so you don't hear the songs you've heard on YouTube Music within 2 hours.",
-  "version": "1.0.0",
+  "description": "It automatically adjusts the playlist so you do not hear the songs you have heard on YouTube Music within 2 hours.",
+  "version": "1.0.4",
   "short_name": "Yt-Music skip heard",
-  "permissions": ["storage", "tabs", "activeTab", "https://music.youtube.com/*", "http://music.youtube.com/*"],
+  "permissions": ["https://music.youtube.com/*", "http://music.youtube.com/*"],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["*://music.youtube.com/*"],
-      "js": ["yt-music-skip.js"]
+      "js": ["yt-music-skip.js"],
+      "css": ["toggle.css"]
     }
   ],
   "browser_action": {
