@@ -4,6 +4,8 @@
   align-items: center;
   cursor: pointer;
   height: 25px;
+  top: 10px;
+  position: relative;
 }
 
 .yt_skip_btn_text {
