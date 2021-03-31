@@ -1,4 +1,5 @@
 let prevSong = "";
+let prevIsSkip = localStorage.getItem("autoSkip") && localStorage.getItem("autoSkip") === "true";
 let isSkip = localStorage.getItem("autoSkip") && localStorage.getItem("autoSkip") === "true";
 
 const addPlayList = (name) => {
@@ -117,6 +118,7 @@ const onLoad = () => {
   labelEl.addEventListener("click", () => {
     const checked = document.querySelector("input.yt_skip_btn_toggle_input").checked;
     localStorage.setItem("autoSkip", checked);
+    prevIsSkip = isSkip;
     isSkip = checked;
   });
 
@@ -135,7 +137,10 @@ const intervalFunc = () => {
     if (nowPlay && nowPlay.length && nowPlay[0].outerText) {
       const song = nowPlay[0].outerText;
       addPlayList(nowPlay[0].outerText);
-      if (isSkip && prevSong !== song) playListRemove(nowPlay[0].outerText);
+      if ((!prevIsSkip && isSkip) || (isSkip && prevSong !== song)) {
+        prevIsSkip = isSkip;
+        playListRemove(nowPlay[0].outerText);
+      }
       prevSong = song;
     }
   }
