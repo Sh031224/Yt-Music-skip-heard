@@ -56,7 +56,11 @@ const playListRemove = async (song) => {
     for (let j = 0; j < list.length; j++) {
       selectedEl = list[j].children;
 
-      if (selectedEl[2].children[0].innerText === removedItems[i].name && song !== removedItems[i].name && playingIdx < j) {
+      if (
+        selectedEl[2].children[0].innerText === removedItems[i].name &&
+        song !== removedItems[i].name &&
+        playingIdx < j
+      ) {
         selectedName = removedItems[i].name;
         selectedIdx = j;
         break;
@@ -75,8 +79,24 @@ const playListRemove = async (song) => {
       const secondStep = () =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
-            document.querySelectorAll(".ytmusic-menu-popup-renderer").item(7).click();
+            if (document.querySelectorAll("ytmusic-menu-service-item-renderer")[2]) {
+              document.querySelectorAll("ytmusic-menu-service-item-renderer")[2].click();
+            }
+
             resolve();
+            // const popup = document.querySelectorAll(".ytmusic-menu-popup-renderer");
+            // for (let i = 0; i < popup.length; i++) {
+            //   console.log(
+            //     popup[i].querySelector(
+            //       "path[d=M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z]"
+            //     )
+            //   );
+            //   if (popup.item(i).querySelector("yt-formatted-string").innerText.includes("삭제")) {
+            //     document.querySelectorAll(".ytmusic-menu-popup-renderer").item(i).click();
+            //     resolve();
+            //     break;
+            //   }
+            // }
           }, 10);
         });
 
