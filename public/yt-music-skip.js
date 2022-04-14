@@ -40,7 +40,8 @@ const playListRemove = async (song) => {
   const checkList = checkListEl ? checkListEl.childNodes : null;
 
   for (let i = 0; i < checkList.length; i++) {
-    if (song === checkList[i].children[2].children[0].innerText) {
+    const songName = checkList[i].children[2] ? checkList[i].children[2].children[0].innerText : checkList[i].children[0].children[0].children[2].children[0].innerText;
+    if (song === songName) {
       playingIdx = i;
       break;
     }
@@ -55,9 +56,10 @@ const playListRemove = async (song) => {
 
     for (let j = 0; j < list.length; j++) {
       selectedEl = list[j].children;
+      const songName = selectedEl[2] ? selectedEl[2].children[0].innerText : selectedEl[0].children[0].children[2].children[0].innerText;
 
       if (
-        selectedEl[2].children[0].innerText === removedItems[i].name &&
+        songName === removedItems[i].name &&
         song !== removedItems[i].name &&
         playingIdx < j
       ) {
@@ -71,7 +73,8 @@ const playListRemove = async (song) => {
       const firstStep = () =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
-            selectedEl.item(3).children.item(1).click();
+            const clickItem = selectedEl.item(3) ? selectedEl.item(3).children.item(1) : selectedEl.item(1).children[0].children[3].children[1];
+            clickItem.click();
             resolve();
           }, 100);
         });
