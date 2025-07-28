@@ -16,9 +16,5 @@
       "js": ["yt-music-skip.js"],
       "css": ["toggle.css"]
     }
-  ],
-  "action": {
-    "default_title": "Yt-Music skip heard",
-    "default_popup": "index.html"
-  }
+  ]
 }
